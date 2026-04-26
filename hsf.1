@@ -1,0 +1,61 @@
+.TH hsf 1 "2026-04-26" "1.0.0" "User Commands"
+
+.SH NAME
+     hsf \- fast and secure hosts file manager
+
+.SH SYNOPSIS
+     \fBhsf\fR [\fICOMMAND\fR] [\fIARGUMENTS\fR]
+
+.SH DESCRIPTION
+     \fBhsf\fR is a system utility for managing the \fI/etc/hosts\fR file. It 
+     provides atomic writes, backup management, and a preset system with 
+     automatic privilege dropping for secure network operations. Written in Rust.
+
+.SH COMMANDS
+     \fBhelp\fR
+             Print help information.
+
+     \fBversion\fR
+             Print the version of the utility.
+
+     \fBclear\fR
+             Clear all entries from the hosts file.
+
+     \fBbase\fR
+             Reset the hosts file to the base configuration.
+
+     \fBbackup\fR <\fInew|from|del|list\fR> [\fIarg\fR]
+             Manage host file backups:
+             \fBnew\fR <\fIname\fR>    Make a new backup.
+             \fBfrom\fR <\fIname\fR>   Load a target backup.
+             \fBdel\fR <\fIname\fR>    Delete a specific backup.
+             \fBlist\fR [\fIsearch\fR]  Print list of backups.
+             \fBinfo\fR <\fIname\fR>    Print information about a backup.
+
+     \fBinfo\fR
+             Print short info and statistics about the current hosts file.
+
+     \fBcheck\fR <\fIdomain\fR>
+             Check where the specified domain points to.
+
+     \fBadd\fR <\fIip\fR> <\fIdomain\fR>
+             Add a new IP and domain to the hosts file.
+
+     \fBremove\fR <\fIdomain\fR>
+             Remove a domain from the hosts file.
+
+     \fBpreset\fR <\fIload|list\fR> [\fIarg\fR]
+             Manage presets:
+             \fBload\fR <\fIname\fR>   Load a target preset.
+             \fBlist\fR [\fIsearch\fR] Print list of presets.
+             <\fIname\fR>        Quickly load a target preset.
+
+.SH SECURITY
+     When processing remote presets, \fBhsf\fR drops ROOT privileges before 
+     connecting to the network to ensure system integrity.
+
+.SH HISTORY
+     Created in 2026 as a high-performance Rust alternative for comfort and security by Vinkoplay.
+
+.SH SEE ALSO
+     \fBhosts\fR(5)

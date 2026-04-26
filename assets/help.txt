@@ -1,0 +1,18 @@
+hsf help                 - print help information
+hsf version              - print version of util
+hsf clear                - clear hosts file
+hsf base                 - write to hosts file base config
+hsf backup <new|from|del|list> [arg]
+    backup new <name>    - make the backup of hosts file
+    backup from <name>   - load the target backup
+    backup del <name>    - delete the target backup
+    backup list [search] - print list of backups
+    backup info <name>   - print some info about backup
+hsf info                 - print short info about hosts file
+hsf check <domain>       - check domain and where it points
+hsf add <ip> <domain>    - add domain to hosts file
+hsf remove <domain>      - remove domain from hosts file
+hsf preset <load/list> [arg]
+    preset load <name>   - load target preset
+    preset list [search] - print list of presets
+    preset <name>        - load target preset

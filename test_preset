@@ -1,0 +1,3 @@
+127.0.1.1	%HOSTNAME%.localdomain	%HOSTNAME%
+
+#require <https://raw.githubusercontent.com/StevenBlack/hosts/refs/heads/master/hosts>

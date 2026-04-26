@@ -1,0 +1,15 @@
+[package]
+name = "hsf"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+chrono = "0.4.44"
+libc = "0.2.186"
+ureq = "3.3.0"
+
+[profile.release]
+lto = true        
+codegen-units = 1
+opt-level = 3
+strip = true
