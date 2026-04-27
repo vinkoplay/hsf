@@ -3,7 +3,7 @@ Simple Hosts file utility for Linux
 
 # How to install?
 ## Installing dependencies
-For build need rustup, glibc
+Build Requirements rustup, glibc
 ### Ubuntu | Debian | Linux Mint | Pop!_OS
 ```sh
 sudo apt update
@@ -30,7 +30,7 @@ sudo zypper install rustup
 apk add build-base rustup
 ```
 ---
-### Installing rust compier and cargo
+### Installing rust compiler and cargo
 ```sh
 rustup default stable
 ```
@@ -42,11 +42,18 @@ git clone https://github.com/vinkoplay/hsf.git
 cd hsf
 ```
 
-Run the installing script
+Run the installation script
 
 ```sh
 chmod +x install.sh
 ./install.sh
+```
+
+# Usage Example
+```sh
+hsf help
+hsf version
+sudo hsf base
 ```
 
 # Info
