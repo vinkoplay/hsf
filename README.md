@@ -44,8 +44,21 @@ cd hsf
 
 Run the installing script
 
-
 ```sh
 chmod +x install.sh
 ./install.sh
 ```
+
+# Info
+To help use:
+```sh
+hsf --help
+```
+
+or
+
+```sh
+man hsf
+```
+
+[Presets docs](https://github.com/vinkoplay/hsf/blob/main/docs/presets.md)
