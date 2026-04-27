@@ -72,7 +72,7 @@ pub fn is_valid_name(name: &str) -> bool {
 
 /// Entry point for arguments
 pub fn parse_backup(action: &str, arg: &str) -> Result<(), Box<dyn std::error::Error>> {
-    match action {
+    match action.to_lowercase().as_str() {
         "new" | "n" | "--new" | "-n" => {
             new_backup(&arg)?;
         }

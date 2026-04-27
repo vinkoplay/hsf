@@ -38,7 +38,7 @@ pub fn parse_preset(action: &str, arg: &str) -> Result<(), Box<dyn std::error::E
         }
     }
 
-    match action {
+    match action.to_lowercase().as_str() {
         "load" | "from" | "apply" | "--load" | "--from" | "--apply" | "lo" | "f" | "ld" | "a" | "-lo" | "-f" | "-ld" | "-a"  => {
             load_preset(&arg)?;
         }
