@@ -27,7 +27,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         return Ok(());
     }
 
-    match args[1].as_str() {
+    match args[1].to_lowercase().as_str() {
         "help" | "h" | "--help" | "-h" => {
             help()?;
         }
