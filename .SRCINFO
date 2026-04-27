@@ -1,0 +1,18 @@
+pkgbase = hsf-git
+	pkgdesc = A fast and secure /etc/hosts manager written in Rust
+	pkgver = 1.0.0
+	pkgrel = 1
+	url = https://github.com/vinkoplay/hsf
+	arch = x86_64
+	license = MIT
+	makedepends = git
+	makedepends = rust
+	makedepends = cargo
+	depends = gcc-libs
+	depends = glibc
+	provides = hsf
+	conflicts = hsf
+	source = git+https://github.com/vinkoplay/hsf.git
+	sha256sums = SKIP
+
+pkgname = hsf-git
