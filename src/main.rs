@@ -37,7 +37,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         "clear" | "c" | "--clear" | "-c" => {
             utils::clear()?;
         }
-        "reset" | "r" | "--reset" | "-r" | "base" | "--base"=> {
+        "reset" | "r" | "--reset" | "-r" | "base" | "--base" | "ba" | "-ba"=> {
             utils::reset()?;
         }
         "backup" | "b" | "--backup" | "-b" => {
