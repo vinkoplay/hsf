@@ -28,6 +28,12 @@ example:
 ```
 
 but you can use some tricks.
+
+You can use the %HOSTNAME% placeholder. The program will automatically replace it with your system's hostname.
+Example:
+```
+127.0.1.1	%HOSTNAME%.localdomain	%HOSTNAME%
+```
 ### Include
 **C-style include**
 It copies the file and pastes.
