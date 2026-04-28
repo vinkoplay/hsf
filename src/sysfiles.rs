@@ -5,9 +5,17 @@ use std::env;
 use std::ffi::CString;
 use libc::{uid_t, gid_t, setuid, setgid, initgroups, getuid};
 
-
 pub const HOSTS_PATH: &str = "/etc/hosts";
 pub const HOSTNAME_PATH: &str = "/etc/hostname";
+
+macro_rules! debug_println {
+    ($($arg:tt)*) => {
+        #[cfg(debug_assertions)]
+        {
+            println!($($arg)*);
+        }
+    };
+}
 
 /// Drops priviliges from sudo to normal user
 pub fn drop_privileges() -> Result<(), Box<dyn std::error::Error>> {
@@ -207,23 +215,29 @@ pub fn _is_valid_filename(name: &str) -> bool {
 
 /// Checks valid content of hosts file
 pub fn is_valid_hosts_content(content: &str) -> bool {
-    for line in content.lines() {
+    for (idx, line) in content.lines().enumerate() {
         let trimmed = line.split('#').next().unwrap_or("").trim();
         
-        if trimmed.is_empty() { continue; }
+        if trimmed.is_empty() {
+            continue;
+        }
 
         let mut parts = trimmed.split_whitespace();
+
         let ip_part = match parts.next() {
-            Some(p) => p,
-            None => return false,
+            Some(p) => p.split('%').next().unwrap_or(p),
+            None => continue,
         };
 
-        // Если IP не парсится — синтаксис неверный (false)
-        if ip_part.parse::<std::net::IpAddr>().is_err() {
+        let clean_ip = ip_part.trim_matches(|c: char| !c.is_ascii_graphic());
+        if clean_ip.parse::<std::net::IpAddr>().is_err() {
+            println!("Error on line {}.", idx);
+            debug_println!("Raw bytes of IP: {:?}", ip_part.as_bytes());
             return false;
         }
 
         if parts.next().is_none() {
+            println!("Error on line {}.", idx);
             return false;
         }
     }
