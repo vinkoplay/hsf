@@ -3,6 +3,7 @@ use std::fs;
 use std::io::Read;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
+
 use crate::{sysfiles, utils, preproccesor};
 
 pub const MAX_SIZE: u64 = 7 * 1024 * 1024; // 7 MB
@@ -39,13 +40,13 @@ pub fn parse_preset(action: &str, arg: &str) -> Result<(), Box<dyn std::error::E
     }
 
     match action.to_lowercase().as_str() {
-        "load" | "from" | "apply" | "--load" | "--from" | "--apply" | "lo" | "f" | "ld" | "a" | "-lo" | "-f" | "-ld" | "-a"  => {
+        "load" | "from" | "apply" | "--load" | "--from" | "--apply" | "lo" | "ld" | "a" | "-lo" | "-ld" | "-a"  => {
             load_preset(&arg)?;
         }
         "list" | "l" | "--list" | "-l" | "search" | "s" | "--search" | "-s" => {
             list_preset(&arg)?;
         }
-        "format" | "fo" | "fr" | "--format" | "-fo" | "-fr" | "result" | "--result" | "r" | "-r" => {
+        "format" | "fo" | "fr" | "--format" | "-fo" | "-fr" | "result" | "--result" | "r" | "-r" | "f" | "-f" => {
             let path = PathBuf::from(&arg);
             format_preset(&path)?;
         }
@@ -69,20 +70,14 @@ pub fn format_preset_run(path: &Path) -> Result<(), Box<dyn std::error::Error>> 
         return Err("incorrect path or this is directory".into())
     }
 
-    let hostname = utils::get_right_hostname()?;
     let worked_file = preproccesor::process_all_includes(path)?;
 
     sysfiles::drop_privileges()?;
     
-    let preprocessed_file = preproccesor::process_all_requires(&worked_file)?;
-    let processed_file = preprocessed_file.replace("%HOSTNAME%", &hostname);
+    let processed_file = preproccesor::process_all_requires(&worked_file)?;
 
     if processed_file.len() > MAX_SIZE as usize {
         return Err("Content limit exceeded".into());
-    }
-
-    if !sysfiles::is_valid_hosts_content(&processed_file) {
-        return Err("Incorrect hosts format file".into());
     }
 
     println!("{}", processed_file);
@@ -93,11 +88,16 @@ pub fn format_preset_run(path: &Path) -> Result<(), Box<dyn std::error::Error>> 
 /// Loads preset to hosts file
 pub fn load_preset(name: &str) -> Result<(), Box<dyn std::error::Error>> {
     let path = find_preset_file(name)?;
-    let current_executable = std::env::current_exe()?;
     
+    let want = utils::input(&format!(include_str!("../assets/presets_warning.txt"), "\x1b[33;1m", "\x1b[0m", name))?;
+    if want.to_lowercase() != "y" {
+        return Ok(());
+    }
+
+    let current_executable = std::env::current_exe()?;
     let mut output = String::new();
     let mut child = Command::new("timeout")
-        .arg("7s")
+        .arg("9s")
         .arg(&current_executable)
         .arg("preset")
         .arg("format")
@@ -110,16 +110,19 @@ pub fn load_preset(name: &str) -> Result<(), Box<dyn std::error::Error>> {
     }
 
     let status = child.wait()?;
+    if output.contains("%HOSTNAME%") {
+        let hostname = utils::get_right_hostname()?;
+        output = output.replace("%HOSTNAME%", &hostname);
+    }
+
     let has_errors = output.starts_with("E:") || output.starts_with("e:");
     let code = status.code().ok_or("Could't get code of children")?;
-
     if code != 0 || has_errors {
         if code == 124 {
             println!("Timeout for formating preset")
         } else {
             println!("Error: {}", output)
         }
-        
     } else {
         if output.len() <= MAX_SIZE as usize && sysfiles::is_valid_hosts_content(&output) {
             sysfiles::write_hosts(&output)?;

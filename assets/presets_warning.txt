@@ -1,0 +1,4 @@
+{}Presets are not audited. 
+They may contain phishing links or other malicious elements. 
+Use at your own risk.{}
+Are you sure you want to load {} preset? [y/N]: 
