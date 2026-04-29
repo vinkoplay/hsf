@@ -15,6 +15,7 @@ sha256sums=('SKIP')
 
 build() {
     cd "$srcdir/${pkgname%-git}"
+    export CARGO_HOME="$srcdir/cargo-home"
     cargo build --release --locked
 }
 
@@ -22,8 +23,6 @@ package() {
     cd "$srcdir/${pkgname%-git}"
     
     install -Dm755 "target/release/hsf" "$pkgdir/usr/bin/hsf"
-    
     install -Dm644 "hsf.1" "$pkgdir/usr/share/man/man1/hsf.1"
-
     install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
