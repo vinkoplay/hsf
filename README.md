@@ -68,4 +68,4 @@ or
 man hsf
 ```
 
-[Presets docs](https://github.com/vinkoplay/hsf/blob/main/docs/presets.md)
+[Presets doc](https://github.com/vinkoplay/hsf/blob/main/docs/presets.md)
