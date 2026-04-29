@@ -6,8 +6,6 @@ mod utils;
 mod preset;
 mod preproccesor;
 
-pub const VERSION: &str = "1.0.0";
-
 #[cfg(not(target_os = "linux"))]
 compile_error!("This project is linux only");
 
@@ -31,8 +29,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         "help" | "h" | "--help" | "-h" => {
             help()?;
         }
-        "version" | "v" | "--version" | "-v" => {
-            println!("HSF Version {}", VERSION);
+        "version" | "v" | "--version" | "-v" | "ver" | "--ver" => {
+            let version = env!("CARGO_PKG_VERSION");
+            println!("HSF Version {}", version);
         }
         "clear" | "c" | "--clear" | "-c" => {
             utils::clear()?;
