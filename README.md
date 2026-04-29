@@ -3,11 +3,11 @@ Simple Hosts file utility for Linux
 
 # How to install?
 ## Installing dependencies
-Build Requirements rustup, glibc
+Build Requirements: rustup, glibc, git
 ### Ubuntu | Debian | Linux Mint | Pop!_OS
 ```sh
 sudo apt update
-sudo apt install build-essential curl
+sudo apt install build-essential curl git
 curl --proto '=https' --tlsv1.2 -sSf https://rustup.rs | sh
 ```
 reload terminal
@@ -18,21 +18,21 @@ reload terminal
 > yay -S hsf
 > ```
 ```sh
-sudo pacman -S rustup base-devel
+sudo pacman -S rustup base-devel git
 ```
 ### Fedora | Red Hat | CentOS
 ```sh
 sudo dnf groupinstall "Development Tools"
-sudo dnf install rustup
+sudo dnf install rustup git
 ```
 ### openSUSE
 ```sh
 sudo zypper install -t pattern devel_basis
-sudo zypper install rustup
+sudo zypper install rustup git
 ```
 ### Alpine Linux
 ```sh
-apk add build-base rustup
+apk add build-base rustup git
 ```
 ---
 ### Installing rust compiler and cargo
