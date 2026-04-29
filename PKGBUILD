@@ -1,5 +1,5 @@
 # Maintainer: Vinkoplay
-pkgname=hsf-git
+pkgname=hsf
 pkgver=1.0.0
 pkgrel=1
 pkgdesc="A fast and secure /etc/hosts manager written in Rust"
@@ -7,16 +7,19 @@ arch=('x86_64')
 url="https://github.com/vinkoplay/hsf"
 license=('MIT')
 depends=('gcc-libs' 'glibc')
-makedepends=('git' 'rust' 'cargo')
-provides=('hsf')
-conflicts=('hsf')
-source=("git+https://github.com/vinkoplay/hsf.git")
-sha256sums=('SKIP')
+makedepends=('git' 'rust' 'cargo' 'nasm')
+options=('!lto')
+provides=()
+conflicts=()
+source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('93c18f53822c774e3a433fe2935dd8031630729bb0dd6d405cd6b63a78dc1a5e')
 
 build() {
     cd "$srcdir/${pkgname%-git}"
     export CARGO_HOME="$srcdir/cargo-home"
-    cargo build --release --locked
+    export CC=gcc
+    export CFLAGS="$CFLAGS -fPIC"
+    cargo build --release --frozen
 }
 
 package() {
