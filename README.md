@@ -12,6 +12,11 @@ curl --proto '=https' --tlsv1.2 -sSf https://rustup.rs | sh
 ```
 reload terminal
 ### Arch Linux
+> [!TIP]
+> Arch Linux users can install the package directly from the AUR and skip the manual build steps:
+> ```sh
+> yay -S hsf
+> ```
 ```sh
 sudo pacman -S rustup base-devel
 ```
