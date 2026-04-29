@@ -1,1 +1,8 @@
 /target
+*.pkg.tar.zst
+*.pkg.tar.zst.sig
+*-build.log
+*-package.log
+*.log.namcap
+*.log
+hsf-*.tar.gz
