@@ -11,5 +11,6 @@ RUSTFLAGS="-C target-cpu=native" cargo build --release --locked
 
 sudo install -Dm755 "target/release/hsf" "/usr/local/bin/hsf"
 sudo install -Dm644 "hsf.1" "/usr/share/man/man1/hsf.1"
+sudo install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 
 sudo mandb &> /dev/null
