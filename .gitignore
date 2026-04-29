@@ -6,3 +6,4 @@
 *.log.namcap
 *.log
 hsf-*.tar.gz
+/hsf
